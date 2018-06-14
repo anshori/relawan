@@ -36,6 +36,39 @@
     });
     var kmlLayer = new L.KML("{{ asset('js/map/krb_merapi.kml') }}", {async: true});
     var tngmLayer = new L.KML("{{ asset('js/map/tngmerapi.kml') }}", {async: true});
+    
+    /* Leaflet Geolocation Plugin */
+    var locateControl = L.control.locate({
+	   position: "bottomright",
+	   drawCircle: true,
+	   follow: true,
+	   setView: true,
+	   keepCurrentZoomLevel: false,
+	   markerStyle: {
+		  weight: 1,
+		  opacity: 0.8,
+		  fillOpacity: 0.8,
+	   },
+	   circleStyle: {
+		  weight: 1,
+		  clickable: false,
+	   },
+	   icon: "fa fa-crosshairs",
+	   metric: true,
+	   strings: {
+		  title: "Klik untuk mengetahui lokasimu",
+		  popup: "Lokasimu sekarang di sini. Akurasi {distance} {unit}",
+		  outsideMapBoundsMsg: "Kamu berada di luar area peta"
+	   },
+	   locateOptions: {
+		  maxZoom: 15,
+		  watch: true,
+		  enableHighAccuracy: true,
+		  maximumAge: 10000,
+		  timeout: 10000
+	   },
+	});
+    
     var overlayMaps = {
         "Kawasan Rawan Bencana": kmlLayer,
         "Kawasan Taman Nasional": tngmLayer,
@@ -45,6 +78,7 @@
     function map_init(map, options) {
         L.control.layers(null,overlayMaps).addTo(map);      
         map.scrollWheelZoom.disable();
+        locateControl.addTo(map);
     }
 </script>
 <script src="{{ asset('js/app.js') }}"></script>

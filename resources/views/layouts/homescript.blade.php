@@ -8,10 +8,13 @@
 				"<tr><td>Status</td><td>" + "-" + "</td></tr>" + 
         "<tr><td>Koordinator</td><td>" + "-" + "</td></tr>" + 
         "<tr><td>Telepon</td><td>" + "-" + "</td></tr>" +
-				"</table>" + "<a href='#'>Detil Info >></a>";
+				"</table>" + "<a href='posko/" + feature.properties.Code + "'>Detil Info >></a>";
 		if (feature.properties) {
 			layer.on({
-				click: function (e) {
+				mouseover: function (e) {
+          posko.bindTooltip(feature.properties.Name);
+        },
+        click: function (e) {
 				  $("#feature-title").html(feature.properties.Name);
 				  $("#feature-info").html(popupContent);
 				  $("#featureModal").modal("show");
@@ -207,7 +210,7 @@
                 shadowSize:   [52, 54],
                 iconAnchor:   [32, 41],
                 shadowAnchor: [29, 54],
-                popupAnchor:  [-3, -76]
+                popupAnchor:  [-3, -76],
         });
       objects[nearest_text].setIcon(customIcon);
       objects[nearest_text].bounce({duration: 500, height: 30, loop: 10});
